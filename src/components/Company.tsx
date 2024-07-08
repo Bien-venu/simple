@@ -38,7 +38,7 @@ export function Company() {
       <DropdownMenuTrigger asChild>
         <div className="flex cursor-pointer items-center gap-1 text-xs">
           <h1 className="flex h-6 w-6 items-center justify-center rounded bg-bug uppercase">
-            is
+            ic
           </h1>
           <h1 className="cursor-pointer text-sm font-medium">Icon</h1>
           <svg
