@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-
+import { AppProvider } from "@/context/AppContext";
 
 export const metadata: Metadata = {
   title: "Simple",
@@ -13,10 +13,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <div className="h-screen w-full bg-background text-white">{children}</div>
-      </body>
-    </html>
+    <AppProvider>
+      <html lang="en">
+        <body>
+          <div className="h-screen w-full bg-background text-white ">
+            {children}
+          </div>
+        </body>
+      </html>
+    </AppProvider>
   );
 }
