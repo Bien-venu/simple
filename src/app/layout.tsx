@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { AppProvider } from "@/context/AppContext";
+import { AppProvider } from "../context/AppContext";
 
 export const metadata: Metadata = {
   title: "Simple",
@@ -16,7 +16,7 @@ export default function RootLayout({
     <AppProvider>
       <html lang="en">
         <body>
-          <div className="h-screen w-full bg-background text-white ">
+          <div className="h-screen w-full bg-background text-white">
             {children}
           </div>
         </body>

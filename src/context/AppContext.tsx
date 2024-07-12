@@ -12,7 +12,7 @@ import {
 interface AppContextProps {
   data: any[];
   isLoading: boolean;
-  close: string | null;
+  error: string | null;
   filter: string;
   setFilter: (filter: string) => void;
   amount: number[];
@@ -26,8 +26,8 @@ const AppContext = createContext<AppContextProps | undefined>(undefined);
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [close, setClose] = useState<string | null>(null);
-  const [filter, setFilter] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [filter, setFilter] = useState("inbox");
   const [amount, setAmount] = useState<number[]>([700, 3500]);
   const [selectedSort, setSelectedSort] = useState<string | null>(null);
 
@@ -36,7 +36,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       value={{
         data,
         isLoading,
-        close,
+        error,
         filter,
         setFilter,
         amount,

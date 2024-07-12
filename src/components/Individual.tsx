@@ -1,9 +1,16 @@
+"use client";
+import { useAppContext } from "@/context/AppContext";
 import React from "react";
 
 const Individual = () => {
+  const { setFilter } = useAppContext();
+
   return (
     <div className="flex flex-col px-4 text-xs">
-      <div className="hover:bg-hover flex items-center gap-1 rounded p-1 py-2 text-grey hover:text-white">
+      <div
+        className="flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-hover hover:text-white"
+        onClick={() => setFilter("inbox")}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -27,7 +34,10 @@ const Individual = () => {
         </svg>
         <h1 className="text-white">Inbox</h1>
       </div>
-      <div className="hover:bg-hover flex items-center gap-1 rounded p-1 py-2 text-grey hover:text-white">
+      <div
+        className="flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-hover hover:text-white"
+        onClick={() => setFilter("issues")}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"

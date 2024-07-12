@@ -4,10 +4,10 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="flex w-full">
-      <LeftNavbar />
-      <Main />
-    </div>
+      <div className="flex w-full">
+        <LeftNavbar />
+        <Main />
+      </div>
   );
 };
 

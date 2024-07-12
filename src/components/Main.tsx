@@ -1,9 +1,15 @@
-import React from 'react'
+"use client";
+import { useAppContext } from "@/context/AppContext";
+import React from "react";
+import Message from "./Message";
 
 const Main = () => {
-  return (
-    <div className=' flex-1 bg-bgGray'>Main</div>
-  )
-}
+  const { filter } = useAppContext();
 
-export default Main
+  if (filter === "inbox") {
+    return <Message />;
+  }
+  return <div className="flex-1 bg-bgGray">{filter}</div>;
+};
+
+export default Main;
