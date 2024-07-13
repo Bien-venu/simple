@@ -15,10 +15,9 @@ interface AppContextProps {
   error: string | null;
   filter: string;
   setFilter: (filter: string) => void;
-  amount: number[];
-  setAmount: (amount: number[]) => void;
-  selectedSort: string | null;
-  setSelectedSort: Dispatch<SetStateAction<string | null>>;
+
+  message: number | null;
+  setMessage: Dispatch<SetStateAction<number | null>>;
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -28,8 +27,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState("inbox");
-  const [amount, setAmount] = useState<number[]>([700, 3500]);
-  const [selectedSort, setSelectedSort] = useState<string | null>(null);
+  const [message, setMessage] = useState<number | null>(null);
 
   return (
     <AppContext.Provider
@@ -39,10 +37,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         error,
         filter,
         setFilter,
-        amount,
-        setAmount,
-        selectedSort,
-        setSelectedSort,
+        message,
+        setMessage,
       }}
     >
       {children}
