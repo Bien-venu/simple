@@ -12,7 +12,7 @@ const Inbox = () => {
         Inbox
       </div>
       {messages.length === 0 ? (
-        <div className=" flex-1 flex justify-center items-center text-grey text-sm font-medium">
+        <div className="flex flex-1 items-center justify-center text-sm font-medium text-grey">
           <h1>No task available</h1>
         </div>
       ) : (
@@ -29,10 +29,10 @@ const Inbox = () => {
                 </div>
                 <div className="flex flex-col text-grey">
                   <div className="flex gap-2 text-sm">
-                    <h1 className="uppercase">{message.code}</h1>
+                    <h1 className="font-medium uppercase">{message.code}</h1>
                     <h2 className="font-semibold">{message.task}</h2>
                   </div>
-                  <h6 className="text-xs">{message.activity}</h6>
+                  <h6 className="text-xs font-medium">{message.activity}</h6>
                 </div>
               </div>
               <div className="text-xs text-grey">

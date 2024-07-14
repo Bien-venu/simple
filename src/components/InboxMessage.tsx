@@ -43,7 +43,7 @@ const InboxMessage = () => {
 
   return (
     <div className="flex flex-1 flex-col text-sm font-semibold">
-      <div className="flex min-h-10 w-full items-center border-b border-border px-4">
+      <div className="flex min-h-10 w-full items-center border-b border-border px-8">
         <div className="flex items-center gap-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"

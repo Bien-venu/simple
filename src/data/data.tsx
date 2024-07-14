@@ -8,7 +8,7 @@ export const messages = [
     message:
       "Link to component - https://www.figma.com/design/u5pf2AySo4w85sBSPpdJVT/Konectin-Product-(Resume-Builder)-V2?node-id=7690-101315&m=dev",
     assigner: "Konectintech",
-    worker: ["Bienvenu"],
+    worker: ["Bienvenu", "Konectintech",'Ishimwe'],
     activity: "Konectintech assigned to you",
     date: "",
   },

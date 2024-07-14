@@ -2,7 +2,7 @@ import React from "react";
 
 const MainHeader = () => {
   return (
-    <div className="flex items-center gap-1 p-1 py-2 text-white bg-background justify-center">
+    <div className="flex text-sm font-semibold items-center gap-1 p-1 py-2 text-white bg-background justify-center">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
