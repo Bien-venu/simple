@@ -16,7 +16,7 @@ export default function RootLayout({
     <AppProvider>
       <html lang="en">
         <body>
-          <div className="h-screen w-full bg-background text-white">
+          <div className="h-screen w-full ">
             {children}
           </div>
         </body>
