@@ -1,5 +1,4 @@
 import AuthForm from "@/components/AuthForm";
-import AuthImage from "@/components/AuthImage";
 
 const page = () => {
   const signForm = [
