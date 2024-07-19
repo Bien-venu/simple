@@ -32,10 +32,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
+type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>;
+
 type Status = {
   value: string;
   label: string;
-  icon: LucideIcon;
+  icon: IconType;
 };
 
 const statuses: Status[] = [

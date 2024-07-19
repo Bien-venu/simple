@@ -32,10 +32,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
+type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>;
+
 type Status = {
   value: string;
   label: string;
-  icon: LucideIcon;
+  icon: IconType;
 };
 
 const statuses: Status[] = [
@@ -92,7 +94,7 @@ export function Status() {
     null,
   );
 
-  const getIconClassName = (icon: any) => {
+  const getIconClassName = (icon: IconType) => {
     switch (icon) {
       case RiProgress8Line:
         return "text-done";
@@ -115,7 +117,7 @@ export function Status() {
         <PopoverTrigger asChild>
           <Button
             size="sm"
-            className="w-[150px] border border-border justify-start bg-account hover:bg-hover"
+            className="w-[150px] justify-start border border-border bg-account hover:bg-hover"
           >
             {selectedStatus ? (
               <>
