@@ -1,6 +1,5 @@
 "use client";
 import AuthForm from "@/components/AuthForm";
-import AuthImage from "@/components/AuthImage";
 import Link from "next/link";
 
 const page = () => {

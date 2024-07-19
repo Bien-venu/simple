@@ -1,4 +1,3 @@
-import AuthImage from "@/components/AuthImage";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,10 +10,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-    return (
-      <div className="flex h-screen w-full flex-col items-center overflow-auto lg:flex-row">
-        <AuthImage />
-        {children}
-      </div>
-    );
+  return (
+    <div className="flex h-screen w-full  justify-center items-center overflow-auto ">
+      {children}
+    </div>
+  );
 }

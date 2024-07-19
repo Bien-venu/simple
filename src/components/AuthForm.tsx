@@ -7,7 +7,7 @@ const AuthForm = ({ data }: any) => {
       {data.map((item: any, index: number) => (
         <div
           key={index}
-          className="text-black h-fit w-full flex-1 items-center justify-center p-2 text-sm font-medium sm:flex sm:p-8"
+          className="text-black h-fit w-full items-center justify-center p-2 text-sm font-medium sm:flex sm:w-1/2 sm:p-8"
         >
           <div className="bg-light flex h-fit w-full min-w-80 flex-col gap-6 rounded-lg p-8 py-12 xl:w-3/4">
             <div className="flex flex-col gap-4">
@@ -18,7 +18,7 @@ const AuthForm = ({ data }: any) => {
                 {item.path.message}
                 <Link
                   href={item.path.path}
-                  className="text-green font-semibold"
+                  className=" text-improvement font-semibold"
                 >
                   {item.path.name}
                 </Link>
@@ -33,14 +33,14 @@ const AuthForm = ({ data }: any) => {
                       <input
                         type="password"
                         placeholder={input.placeholder}
-                        className="text-gray border-b border-border pt-2 text-sm"
+                        className="text-gray border-b border-border bg-background pt-2 text-sm"
                         required={input.required}
                       />
                     ) : (
                       <input
                         type="text"
                         placeholder={input.placeholder}
-                        className="text-gray border-b border-border pt-2 text-sm"
+                        className="text-gray border-b border-border bg-background pt-2 text-sm"
                         required={input.required}
                       />
                     )}
@@ -67,7 +67,7 @@ const AuthForm = ({ data }: any) => {
               <Link
                 href="/issues"
                 type="submit"
-                className="bg-black flex w-full bg-background items-center justify-center p-3 font-semibold text-white"
+                className="bg-black flex w-full items-center justify-center bg-white p-3 font-semibold text-background"
               >
                 {item.button}
               </Link>

@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import {
   createContext,
@@ -13,9 +13,10 @@ interface AppContextProps {
   data: any[];
   isLoading: boolean;
   error: string | null;
+  selectedStatus: string;
+  setSelectedStatus: Dispatch<SetStateAction<string>>;
   filter: string;
   setFilter: (filter: string) => void;
-
   message: number | null;
   setMessage: Dispatch<SetStateAction<number | null>>;
 }
@@ -26,6 +27,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedStatus, setSelectedStatus] = useState("To Do");
   const [filter, setFilter] = useState("inbox");
   const [message, setMessage] = useState<number | null>(null);
 
@@ -39,6 +41,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         setFilter,
         message,
         setMessage,
+        selectedStatus,
+        setSelectedStatus,
       }}
     >
       {children}

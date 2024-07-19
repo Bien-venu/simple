@@ -1,6 +1,18 @@
 import React from "react";
+import { MdSwapHorizontalCircle } from "react-icons/md";
+import { RiProgress1Line } from "react-icons/ri";
 
 const Activities = ({ message }: any) => {
+  const getIconClassName = (icon: any) => {
+    switch (icon) {
+      case MdSwapHorizontalCircle:
+        return "text-grey";
+      case RiProgress1Line:
+        return "text-inprogress";
+      default:
+        return "";
+    }
+  };
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
@@ -19,20 +31,23 @@ const Activities = ({ message }: any) => {
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        {message.move.map((activity: any, index: number) => (
-          <div key={index} className="flex items-center gap-4">
-            <activity.icon
-              size={20}
-              className={` ${activity.icon === "MdSwapHorizontalCircle" && "text-grey"} ${activity.icon === "RiProgress1Line" && "text-inprogress"}`}
-            />
-            <div className="flex items-center gap-1 text-xs text-grey">
-              <h1 className="text-white">{activity.creator}</h1>
-              <p className="">{activity.message}</p>
-              <span>.</span>
-              <p>6 days ago</p>
+        {message.move.map((activity: any, index: number) => {
+          const IconComponent = activity.icon;
+          return (
+            <div key={index} className="flex items-center gap-4">
+              <IconComponent
+                size={20}
+                className={getIconClassName(activity.icon)}
+              />
+              <div className="flex items-center gap-1 text-xs text-grey">
+                <h1 className="text-white">{activity.creator}</h1>
+                <p>{activity.message}</p>
+                <span>.</span>
+                <p>6 days ago</p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
