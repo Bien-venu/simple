@@ -1,5 +1,6 @@
 import React from "react";
 import Activities from "./Activities";
+import Comment from "./Comment";
 
 const Notification = ({ data }: any) => {
   return (
@@ -81,6 +82,7 @@ const Notification = ({ data }: any) => {
               <h2>{message.message} </h2>
             </div>
             <Activities message={message} />
+            <Comment />
           </div>
         ),
       )}

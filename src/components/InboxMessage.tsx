@@ -86,7 +86,7 @@ const InboxMessage = () => {
       </div>
       <div className="flex h-full">
         <Notification data={data} />
-        <Properties />
+        <Properties data={data} />
       </div>
     </div>
   );

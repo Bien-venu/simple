@@ -3,12 +3,12 @@ import { useAppContext } from "@/context/AppContext";
 import React from "react";
 
 const Individual = () => {
-  const { setFilter } = useAppContext();
+  const { filter, setFilter } = useAppContext();
 
   return (
     <div className="flex flex-col px-4 text-xs">
       <div
-        className="flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-hover hover:text-white"
+        className={` ${filter === "inbox" && " bg-hover"} flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-bgGray hover:text-white`}
         onClick={() => setFilter("inbox")}
       >
         <svg
@@ -35,7 +35,7 @@ const Individual = () => {
         <h1 className="text-white">Inbox</h1>
       </div>
       <div
-        className="flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-hover hover:text-white"
+        className={` ${filter === "issues" && " bg-hover"} flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-bgGray hover:text-white`}
         onClick={() => setFilter("issues")}
       >
         <svg

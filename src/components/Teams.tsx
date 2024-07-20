@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import {
   Accordion,
   AccordionContent,
@@ -8,7 +8,7 @@ import {
 import { useAppContext } from "@/context/AppContext";
 
 export function Teams() {
-    const { setFilter } = useAppContext();
+  const { filter, setFilter } = useAppContext();
   return (
     <Accordion type="single" collapsible className="w-full px-4 text-grey">
       <AccordionItem value="item-1">
@@ -61,7 +61,7 @@ export function Teams() {
                 <div className="flex flex-col px-4 text-xs">
                   <div className="flex flex-col text-xs">
                     <div
-                      className="flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-hover hover:text-white"
+                      className={` ${filter === "issues" && "bg-hover"} flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-bgGray hover:text-white`}
                       onClick={() => setFilter("issues")}
                     >
                       <svg
@@ -100,13 +100,13 @@ export function Teams() {
                     </div>
                     <div className="mx-3 flex flex-col border-l px-2">
                       <h1
-                        className="flex items-center gap-1 rounded p-1 py-2 text-white hover:bg-hover"
+                        className={` ${filter === "active" && "bg-hover"} flex items-center gap-1 rounded p-1 py-2 text-white hover:bg-bgGray`}
                         onClick={() => setFilter("active")}
                       >
                         Active
                       </h1>
                       <h1
-                        className="flex items-center gap-1 rounded p-1 py-2 text-white hover:bg-hover"
+                        className={` ${filter === "backlog" && "bg-hover"} flex items-center gap-1 rounded p-1 py-2 text-white hover:bg-bgGray`}
                         onClick={() => setFilter("backlog")}
                       >
                         Backlog
@@ -114,7 +114,7 @@ export function Teams() {
                     </div>
                   </div>
                   <div
-                    className="flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-hover hover:text-white"
+                    className={` ${filter === "project" && "bg-hover"} flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-hover hover:text-white`}
                     onClick={() => setFilter("project")}
                   >
                     <svg
@@ -156,7 +156,7 @@ export function Teams() {
                     <h1 className="text-white">Projects</h1>
                   </div>
                   <div
-                    className="flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-hover hover:text-white"
+                    className={` ${filter === "documents" && "bg-hover"} flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-hover hover:text-white`}
                     onClick={() => setFilter("documents")}
                   >
                     <svg

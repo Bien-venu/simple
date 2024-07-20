@@ -8,7 +8,7 @@ import {
 import { useAppContext } from "@/context/AppContext";
 
 export function WorkSpace() {
-  const { setFilter } = useAppContext();
+  const { filter, setFilter } = useAppContext();
 
   return (
     <Accordion type="single" collapsible className="w-full px-4">
@@ -16,10 +16,10 @@ export function WorkSpace() {
         <AccordionTrigger className="text-grey">Workspace</AccordionTrigger>
         <AccordionContent>
           <div
-            className="flex flex-col text-xs"
+            className={` ${filter === "team" && "bg-hover"} flex flex-col text-xs rounded`}
             onClick={() => setFilter("team")}
           >
-            <div className="flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-hover hover:text-white">
+            <div className="flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-bgGray hover:text-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"

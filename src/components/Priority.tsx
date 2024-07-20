@@ -31,6 +31,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { RxDotsHorizontal } from "react-icons/rx";
+import { BsFillExclamationSquareFill } from "react-icons/bs";
+import { BiSignal2 } from "react-icons/bi";
+import { BiSignal3 } from "react-icons/bi";
+import { BiSignal4 } from "react-icons/bi";
 
 type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
@@ -44,29 +49,28 @@ const statuses: Status[] = [
   {
     value: "no priority",
     label: "No priority",
-    icon: HelpCircle,
+    icon: RxDotsHorizontal,
   },
   {
     value: "urgent",
     label: "Urgent",
-    icon: Circle,
+    icon: BsFillExclamationSquareFill,
   },
   {
     value: "high",
     label: "High",
-    icon: RiProgress1Line,
+    icon: BiSignal4,
   },
   {
     value: "medium",
     label: "Medium",
-    icon: RiProgress4Line,
+    icon: BiSignal3,
   },
   {
     value: "low",
     label: "Low",
-    icon: RiProgress6Line,
+    icon: BiSignal2,
   },
-
 ];
 
 export function Priority() {
@@ -91,15 +95,19 @@ export function Priority() {
               </>
             ) : (
               <>
-                <Circle className={`mr-2 h-4 w-4 shrink-0`} />
+                <RxDotsHorizontal className={`mr-2 h-4 w-4 shrink-0`} />
                 No priority
               </>
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="p-0 border border-border" side="right" align="start">
+        <PopoverContent
+          className="border border-border p-0"
+          side="right"
+          align="start"
+        >
           <Command>
-            <CommandInput placeholder="Change status..." />
+            <CommandInput placeholder="Change priority..." />
             <CommandList>
               <CommandEmpty>No results found.</CommandEmpty>
               <CommandGroup>

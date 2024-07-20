@@ -10,6 +10,7 @@ const Message = () => {
       <div className="flex h-full w-full rounded border border-border bg-bgGray">
         <Inbox />
         <InboxMessage />
+        
       </div>
     </div>
   );
