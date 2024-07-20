@@ -17,7 +17,7 @@ const Activities = ({ message }: any) => {
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <h1 className="text-base">Activity</h1>
-        <div className="flex- flex">
+        <div className=" flex">
           {message.worker.map(
             (worker: string | any[], index: React.Key | null | undefined) => (
               <div

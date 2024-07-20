@@ -8,7 +8,7 @@ export const messages = [
     code: "Kon1",
     task: "Modern Template 8",
     status: "todo",
-    priority: "no priority",
+    priority: "medium",
     labels: "improvement",
     message:
       "Link to component - https://www.figma.com/design/u5pf2AySo4w85sBSPpdJVT/Konectin-Product-(Resume-Builder)-V2?node-id=7690-101315&m=dev",
