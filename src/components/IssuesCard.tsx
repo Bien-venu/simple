@@ -123,13 +123,15 @@ const IssuesCard = ({ data }: any) => {
 
   return (
     <div className="flex h-fit w-full items-center justify-between border-y border-border p-2 px-8 text-xs font-semibold">
-      <div className="flex items-end gap-1">
-        {priority && <priority.icon size={20} className=" text-grey h-fit" />}
-        <h2 className=" text-grey">{data.code}</h2>
-        {status && <status.icon size={15} />}
-        <h2>{data.task}</h2>
-        <div className="flex items-end text-grey">
-          <MdKeyboardArrowRight size={20} />
+      <div className="flex items-end gap-1 ">
+        {priority && (
+          <priority.icon size={20} className="h-fit  text-grey" />
+        )}
+        <h2 className="h-full  text-grey">{data.code}</h2>
+        {status && <status.icon className="h-4 w-4 " />}
+        <h2 className="">{data.task}</h2>
+        <div className="flex items-center  text-grey">
+          <MdKeyboardArrowRight className="h-4 w-4 " />
           {data.name}
         </div>
       </div>
