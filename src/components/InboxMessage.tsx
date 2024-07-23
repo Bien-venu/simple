@@ -7,7 +7,6 @@ import Properties from "./Properties";
 const InboxMessage = () => {
   const { message } = useAppContext();
   const data = messages.filter((item) => item.id === message);
-  console.log(data);
 
   if (message === null) {
     return (
@@ -84,10 +83,12 @@ const InboxMessage = () => {
           <h1 className="text-white">Icon v1</h1>
         </div>
       </div>
-      <div className="flex h-full">
-        <Notification data={data} />
-        <Properties data={data} />
-      </div>
+      {data.map((a, index) => (
+        <div key={index} className="flex h-full">
+          <Notification a={a} />
+          <Properties a={a} />
+        </div>
+      ))}
     </div>
   );
 };

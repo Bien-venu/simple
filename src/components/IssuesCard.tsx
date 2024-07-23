@@ -8,6 +8,7 @@ import {
   Circle,
   HelpCircle,
   LucideIcon,
+  LucideProps,
   XCircle,
 } from "lucide-react";
 import { RiProgress1Line } from "react-icons/ri";
@@ -18,6 +19,9 @@ import { RiProgress7Line } from "react-icons/ri";
 import { RiProgress4Line } from "react-icons/ri";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { FaCircle } from "react-icons/fa";
+import Link from "next/link";
+import { useAppContext } from "@/context/AppContext";
+import { IconType } from "react-icons";
 
 const priorities = [
   {
@@ -113,25 +117,47 @@ const labels = [
   },
 ];
 
+const getIconClassName = (icon: IconType | React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>) => {
+  switch (icon) {
+    case RiProgress8Line:
+      return "text-done";
+    case RiProgress6Line:
+      return "text-bug";
+    case RiProgress1Line:
+      return "text-inprogress";
+    case RiProgress4Line:
+      return "text-inprogress";
+    case RiProgress7Line:
+      return "text-improvement";
+    default:
+      return "";
+  }
+};
+
 const IssuesCard = ({ data }: any) => {
-  // Find the status object that matches the data.priority value
+  const { filter, setFilter } = useAppContext();
+
   const priority = priorities.find(
     (priority) => priority.value === data.priority,
   );
+
   const status = statuses.find((status) => status.value === data.status);
   const label = labels.find((label) => label.value === data.labels);
-
   return (
-    <div className="flex h-fit w-full items-center justify-between border-y border-border p-2 px-8 text-xs font-semibold">
-      <div className="flex items-end gap-1 ">
-        {priority && (
-          <priority.icon size={20} className="h-fit  text-grey" />
+    <Link
+      href={`/issues/issue/${data.id}`}
+      onClick={() => setFilter("issue")}
+      className="flex h-fit w-full items-center justify-between border-b border-border p-2 px-8 text-xs font-semibold"
+    >
+      <div className="flex items-center gap-1">
+        {priority && <priority.icon className="h-4 w-4 text-grey" />}
+        <h2 className="h-full text-grey">{data.code}</h2>
+        {status && (
+          <status.icon className={getIconClassName(status.icon) + ` h-4 w-4`} />
         )}
-        <h2 className="h-full  text-grey">{data.code}</h2>
-        {status && <status.icon className="h-4 w-4 " />}
         <h2 className="">{data.task}</h2>
-        <div className="flex items-center  text-grey">
-          <MdKeyboardArrowRight className="h-4 w-4 " />
+        <div className="flex items-center text-grey">
+          <MdKeyboardArrowRight className="h-4 w-4" />
           {data.name}
         </div>
       </div>
@@ -152,7 +178,7 @@ const IssuesCard = ({ data }: any) => {
           {data.assigner.slice(0, 2)}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

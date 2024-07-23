@@ -5,8 +5,7 @@ import { BsArrowUpShort } from "react-icons/bs";
 const Comment = () => {
   return (
     <div className="relative rounded border border-border bg-account p-4">
-      <input
-        type="text"
+      <textarea
         className="pb-32 w-full bg-account"
         placeholder="Leave a comment"
       />

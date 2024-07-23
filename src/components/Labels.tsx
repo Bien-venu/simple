@@ -1,23 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  ArrowUpCircle,
-  CheckCircle2,
-  Circle,
-  HelpCircle,
-  LucideIcon,
-  XCircle,
-} from "lucide-react";
-import { RiProgress1Line } from "react-icons/ri";
-import { RiProgress8Line } from "react-icons/ri";
-import { IoIosCloseCircle } from "react-icons/io";
-import { RiProgress6Line } from "react-icons/ri";
-import { RiProgress7Line } from "react-icons/ri";
-import { RiProgress4Line } from "react-icons/ri";
 import { FaCircle } from "react-icons/fa";
-
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -32,6 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
@@ -59,12 +44,11 @@ const statuses: Status[] = [
   },
 ];
 
-export function Labels() {
+export function Labels({ a }: any) {
   const [open, setOpen] = React.useState(false);
   const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
-    null,
+    statuses.find((status) => status.value === a.labels) || null,
   );
-
 
   return (
     <div className="flex items-center">
@@ -77,7 +61,11 @@ export function Labels() {
             {selectedStatus ? (
               <>
                 <selectedStatus.icon
-                  className={`${selectedStatus.value === "improvement" && "text-improvement"} ${selectedStatus.value === "bug" && "text-bug"} ${selectedStatus.value === "feature" && "text-feature"} mr-2 h-4 w-4 shrink-0`}
+                  className={`${
+                    selectedStatus.value === "improvement" && "text-improvement"
+                  } ${selectedStatus.value === "bug" && "text-bug"} ${
+                    selectedStatus.value === "feature" && "text-feature"
+                  } mr-2 h-4 w-4 shrink-0`}
                 />
                 {selectedStatus.label}
               </>
@@ -104,18 +92,21 @@ export function Labels() {
                     className="hover:bg-hover"
                     onSelect={(value) => {
                       setSelectedStatus(
-                        statuses.find((priority) => priority.value === value) ||
-                          null,
+                        statuses.find((label) => label.value === value) || null,
                       );
                       setOpen(false);
                     }}
                   >
                     <status.icon
                       className={cn(
-                        `mr-2 h-4 w-4 ${status.value === "improvement" && "text-improvement"} ${status.value === "bug" && "text-bug"} ${status.value === "feature" && "text-feature"}`,
+                        `mr-2 h-4 w-4 ${
+                          status.value === "improvement" && "text-improvement"
+                        } ${status.value === "bug" && "text-bug"} ${
+                          status.value === "feature" && "text-feature"
+                        }`,
                         status.value === selectedStatus?.value
                           ? "opacity-100"
-                          : "opacity-100",
+                          : "opacity-50",
                       )}
                     />
                     <span>{status.label}</span>

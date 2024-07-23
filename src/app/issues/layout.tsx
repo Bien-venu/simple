@@ -1,3 +1,4 @@
+import LeftNavbar from "@/components/LeftNavbar";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,5 +11,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className="h-screen w-full">{children}</div>;
+  return (
+    <div className="h-screen overflow-hidden flex w-full">
+      <LeftNavbar />
+      {children}
+    </div>
+  );
 }

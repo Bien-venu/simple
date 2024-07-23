@@ -1,5 +1,6 @@
 "use client";
 import { useAppContext } from "@/context/AppContext";
+import Link from "next/link";
 import React from "react";
 
 const Individual = () => {
@@ -7,8 +8,9 @@ const Individual = () => {
 
   return (
     <div className="flex flex-col px-4 text-xs">
-      <div
-        className={` ${filter === "inbox" && " bg-hover"} flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-bgGray hover:text-white`}
+      <Link
+        href={`/issues`}
+        className={` ${filter === "inbox" && "bg-hover"} flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-bgGray hover:text-white`}
         onClick={() => setFilter("inbox")}
       >
         <svg
@@ -33,9 +35,10 @@ const Individual = () => {
           />
         </svg>
         <h1 className="text-white">Inbox</h1>
-      </div>
-      <div
-        className={` ${filter === "issues" && " bg-hover"} flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-bgGray hover:text-white`}
+      </Link>
+      <Link
+        href={`/issues`}
+        className={` ${filter === "issues" && "bg-hover"} flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-bgGray hover:text-white`}
         onClick={() => setFilter("issues")}
       >
         <svg
@@ -61,7 +64,7 @@ const Individual = () => {
           />
         </svg>
         <h1 className="text-white">My issues</h1>
-      </div>
+      </Link>
     </div>
   );
 };

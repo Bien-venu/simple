@@ -1,20 +1,14 @@
-"use client";
-
+'use client'
 import * as React from "react";
+import { ArrowUpCircle, CheckCircle2, Circle, HelpCircle } from "lucide-react";
 import {
-  ArrowUpCircle,
-  CheckCircle2,
-  Circle,
-  HelpCircle,
-  LucideIcon,
-  XCircle,
-} from "lucide-react";
-import { RiProgress1Line } from "react-icons/ri";
-import { RiProgress8Line } from "react-icons/ri";
+  RiProgress1Line,
+  RiProgress8Line,
+  RiProgress6Line,
+  RiProgress7Line,
+  RiProgress4Line,
+} from "react-icons/ri";
 import { IoIosCloseCircle } from "react-icons/io";
-import { RiProgress6Line } from "react-icons/ri";
-import { RiProgress7Line } from "react-icons/ri";
-import { RiProgress4Line } from "react-icons/ri";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -88,10 +82,10 @@ const statuses: Status[] = [
   },
 ];
 
-export function Status() {
+const Status = ({ a }: any) => {
   const [open, setOpen] = React.useState(false);
   const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
-    null,
+    statuses.find((status) => status.value === a.status) || null,
   );
 
   const getIconClassName = (icon: IconType) => {
@@ -172,4 +166,6 @@ export function Status() {
       </Popover>
     </div>
   );
-}
+};
+
+export default Status;
