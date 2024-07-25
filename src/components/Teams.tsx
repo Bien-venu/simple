@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useAppContext } from "@/context/AppContext";
+import Link from "next/link";
 
 export function Teams() {
   const { filter, setFilter } = useAppContext();
@@ -60,7 +61,8 @@ export function Teams() {
               <AccordionContent>
                 <div className="flex flex-col px-4 text-xs">
                   <div className="flex flex-col text-xs">
-                    <div
+                    <Link
+                      href={`/issues`}
                       className={` ${filter === "tasks" && "bg-hover"} flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-bgGray hover:text-white`}
                       onClick={() => setFilter("tasks")}
                     >
@@ -97,23 +99,26 @@ export function Teams() {
                         />
                       </svg>
                       <h1 className="text-white">Issues</h1>
-                    </div>
+                    </Link>
                     <div className="mx-3 flex flex-col border-l px-2">
-                      <h1
+                      <Link
+                        href={`/issues`}
                         className={` ${filter === "active" && "bg-hover"} flex items-center gap-1 rounded p-1 py-2 text-white hover:bg-bgGray`}
                         onClick={() => setFilter("active")}
                       >
                         Active
-                      </h1>
-                      <h1
+                      </Link>
+                      <Link
+                        href={`/issues`}
                         className={` ${filter === "backlog" && "bg-hover"} flex items-center gap-1 rounded p-1 py-2 text-white hover:bg-bgGray`}
                         onClick={() => setFilter("backlog")}
                       >
                         Backlog
-                      </h1>
+                      </Link>
                     </div>
                   </div>
-                  <div
+                  <Link
+                    href={`/issues`}
                     className={` ${filter === "project" && "bg-hover"} flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-hover hover:text-white`}
                     onClick={() => setFilter("project")}
                   >
@@ -154,8 +159,7 @@ export function Teams() {
                       />
                     </svg>
                     <h1 className="text-white">Projects</h1>
-                  </div>
-                  
+                  </Link>
                 </div>
               </AccordionContent>
             </AccordionItem>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { AppProvider } from "../context/AppContext";
+import { ConvexClientProvider } from "./ConvexClientProvider";
 
 export const metadata: Metadata = {
   title: "Simple",
@@ -13,14 +14,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AppProvider>
-      <html lang="en">
-        <body>
-          <div className="h-screen w-full bg-background text-white">
-            {children}
-          </div>
-        </body>
-      </html>
-    </AppProvider>
+    <ConvexClientProvider>
+      <AppProvider>
+        <html lang="en">
+          <body>
+            <div className="h-screen w-full bg-background text-white">
+              {children}
+            </div>
+          </body>
+        </html>
+      </AppProvider>
+    </ConvexClientProvider>
   );
 }

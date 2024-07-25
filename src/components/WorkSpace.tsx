@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useAppContext } from "@/context/AppContext";
+import Link from "next/link";
 
 export function WorkSpace() {
   const { filter, setFilter } = useAppContext();
@@ -16,10 +17,13 @@ export function WorkSpace() {
         <AccordionTrigger className="text-grey">Workspace</AccordionTrigger>
         <AccordionContent>
           <div
-            className={` ${filter === "team" && "bg-hover"} flex flex-col text-xs rounded`}
+            className={` ${filter === "team" && "bg-hover"} flex flex-col rounded text-xs`}
             onClick={() => setFilter("team")}
           >
-            <div className="flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-bgGray hover:text-white">
+            <Link
+              href={`/issues`}
+              className="flex items-center gap-1 rounded p-1 py-2 text-grey hover:bg-bgGray hover:text-white"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -40,7 +44,7 @@ export function WorkSpace() {
                 />
               </svg>
               <h1 className="text-white">Teams</h1>
-            </div>
+            </Link>
           </div>
         </AccordionContent>
       </AccordionItem>

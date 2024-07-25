@@ -44,11 +44,17 @@ const statuses: Status[] = [
   },
 ];
 
-export function Labels({ a }: any) {
+export function Labels({ a }: { a: { labels: string } }) {
   const [open, setOpen] = React.useState(false);
   const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
     statuses.find((status) => status.value === a.labels) || null,
   );
+
+  React.useEffect(() => {
+    setSelectedStatus(
+      statuses.find((status) => status.value === a.labels) || null,
+    );
+  }, [a.labels]); // Update when a.labels changes
 
   return (
     <div className="flex items-center">

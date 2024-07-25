@@ -117,7 +117,13 @@ const labels = [
   },
 ];
 
-const getIconClassName = (icon: IconType | React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>) => {
+const getIconClassName = (
+  icon:
+    | IconType
+    | React.ForwardRefExoticComponent<
+        Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+      >,
+) => {
   switch (icon) {
     case RiProgress8Line:
       return "text-done";
@@ -151,7 +157,7 @@ const IssuesCard = ({ data }: any) => {
     >
       <div className="flex items-center gap-1">
         {priority && <priority.icon className="h-4 w-4 text-grey" />}
-        <h2 className="h-full text-grey">{data.code}</h2>
+        <h2 className="h-full text-grey">{data.team}</h2>
         {status && (
           <status.icon className={getIconClassName(status.icon) + ` h-4 w-4`} />
         )}

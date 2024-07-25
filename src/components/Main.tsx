@@ -29,6 +29,11 @@ const Main = () => {
   if (filter === "backlog") {
     return <Backlog />;
   }
+  
+  if (filter === "issue") {
+    return <Tasks />;
+  }
+  
 
   return <div className="flex-1 bg-bgGray">{filter}</div>;
 };

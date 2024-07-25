@@ -9,7 +9,7 @@ const Notification = ({ a }: any) => {
         <div className="flex flex-col gap-4">
           <h1 className="text-2xl font-semibold">{a.task}</h1>
           <p className="flex items-center gap-1 text-xs text-grey">
-            Sub-issue of <span className="uppercase">{a.code}</span>
+            Sub-issue of <span className="uppercase">{a.team}</span>
             <span className="font-semibold text-white"> {a.name}</span>
           </p>
         </div>

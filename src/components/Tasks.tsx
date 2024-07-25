@@ -2,22 +2,15 @@ import React from "react";
 import MainHeader from "./MainHeader";
 import { messages } from "@/data/data";
 import IssuesCard from "./IssuesCard";
+import { HelpCircle, Circle, LucideIcon, LucideProps } from "lucide-react";
 import {
-  ArrowUpCircle,
-  CheckCircle2,
-  Circle,
-  HelpCircle,
-  LucideIcon,
-  LucideProps,
-  XCircle,
-} from "lucide-react";
-import { RiProgress1Line } from "react-icons/ri";
-import { RiProgress8Line } from "react-icons/ri";
+  RiProgress1Line,
+  RiProgress4Line,
+  RiProgress6Line,
+  RiProgress7Line,
+  RiProgress8Line,
+} from "react-icons/ri";
 import { IoIosCloseCircle } from "react-icons/io";
-import { RiProgress6Line } from "react-icons/ri";
-import { RiProgress7Line } from "react-icons/ri";
-import { RiProgress4Line } from "react-icons/ri";
-import { IconType } from "react-icons";
 
 const statuses = [
   {
@@ -67,13 +60,7 @@ const statuses = [
   },
 ];
 
-const getIconClassName = (
-  icon:
-    | React.ForwardRefExoticComponent<
-        Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
-      >
-    | IconType,
-) => {
+const getIconClassName = (icon: React.ElementType<LucideProps>) => {
   switch (icon) {
     case RiProgress8Line:
       return "text-done";
@@ -89,32 +76,34 @@ const getIconClassName = (
       return "";
   }
 };
+
 const Tasks = () => {
   return (
     <div className="flex flex-1 flex-col pb-2 pr-2">
       <MainHeader />
       <div className="flex h-full w-full flex-col gap-4 overflow-auto rounded border border-border bg-bgGray">
-        {/* <h1 className="border-b border-border p-2 px-8">Tasks</h1> */}
-        <div className="flex flex-col gap-4">
-          {statuses.map((stat, index) => (
-            <div key={index} className="flex flex-col pb-4 ">
-              <div className="flex items-center gap-2 border-y border-border p-2 px-8 text-sm">
-                <stat.icon
-                  className={getIconClassName(stat.icon) + ` h-4 w-4`}
-                />
-                <h1>{stat.label}</h1>
+        <h1 className="border-b border-border p-2 px-8">Tasks</h1>
+
+        <div className="flex flex-col">
+          {statuses
+            .filter((stat) => messages.some((m) => m.status === stat.value))
+            .map((stat, index) => (
+              <div key={index} className="flex flex-col pb-1">
+                <div className="flex items-center gap-2 border-y border-border p-2 px-8 text-sm">
+                  <stat.icon
+                    className={`${getIconClassName(stat.icon)} h-4 w-4`}
+                  />
+                  <h1>{stat.label}</h1>
+                </div>
+                <div>
+                  {messages
+                    .filter((m) => m.status === stat.value)
+                    .map((m, idx) => (
+                      <IssuesCard key={idx} data={m} />
+                    ))}
+                </div>
               </div>
-              <div>
-                {messages.map((m, index) => (
-                  <>
-                    {m.status === stat.value && (
-                      <IssuesCard key={index} data={m} />
-                    ) }
-                  </>
-                ))}
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </div>

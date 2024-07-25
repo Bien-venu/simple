@@ -58,7 +58,7 @@ export function Company() {
           </svg>
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
+      <DropdownMenuContent className="w-56 ml-4">
         <DropdownMenuSeparator />
         <DropdownMenuSeparator />
         <DropdownMenuGroup>

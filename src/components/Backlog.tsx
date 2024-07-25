@@ -99,27 +99,29 @@ const Backlog = () => {
     <div className="flex flex-1 flex-col pb-2 pr-2">
       <MainHeader />
       <div className="flex h-full w-full flex-col gap-4 overflow-auto rounded border border-border bg-bgGray">
-        {/* <h1 className="border-b border-border p-2 px-8">Tasks</h1> */}
-        <div className="flex flex-col gap-4">
-          {status.map((stat, index) => (
-            <div key={index} className="flex flex-col pb-4">
-              <div className="flex items-center gap-2 border-y border-border p-2 px-8 text-sm">
-                <stat.icon
-                  className={getIconClassName(stat.icon) + ` h-4 w-4`}
-                />
-                <h1>{stat.label}</h1>
+        <h1 className="border-b border-border p-2 px-8">Backlog</h1>
+        <div className="flex flex-col">
+          {status
+            .filter((stat) => messages.some((m) => m.status === stat.value))
+            .map((stat, index) => (
+              <div key={index} className="flex flex-col pb-1">
+                <div className="flex items-center gap-2 border-y border-border p-2 px-8 text-sm">
+                  <stat.icon
+                    className={getIconClassName(stat.icon) + ` h-4 w-4`}
+                  />
+                  <h1>{stat.label}</h1>
+                </div>
+                <div>
+                  {message.map((m, index) => (
+                    <>
+                      {m.status === stat.value && (
+                        <IssuesCard key={index} data={m} />
+                      )}
+                    </>
+                  ))}
+                </div>
               </div>
-              <div>
-                {message.map((m, index) => (
-                  <>
-                    {m.status === stat.value && (
-                      <IssuesCard key={index} data={m} />
-                    )}
-                  </>
-                ))}
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </div>

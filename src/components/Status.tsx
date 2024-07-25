@@ -1,4 +1,5 @@
 'use client'
+
 import * as React from "react";
 import { ArrowUpCircle, CheckCircle2, Circle, HelpCircle } from "lucide-react";
 import {
@@ -82,11 +83,17 @@ const statuses: Status[] = [
   },
 ];
 
-const Status = ({ a }: any) => {
+const Status = ({ a }: { a: { status: string } }) => {
   const [open, setOpen] = React.useState(false);
   const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
-    statuses.find((status) => status.value === a.status) || null,
+    statuses.find((status) => status.value === a.status) || statuses[0], // Default to first status if not found
   );
+
+  React.useEffect(() => {
+    setSelectedStatus(
+      statuses.find((status) => status.value === a.status) || statuses[0], // Default to first status if not found
+    );
+  }, [a.status]); // Update when a.status changes
 
   const getIconClassName = (icon: IconType) => {
     switch (icon) {
@@ -141,8 +148,8 @@ const Status = ({ a }: any) => {
                     className="hover:bg-hover"
                     onSelect={(value) => {
                       setSelectedStatus(
-                        statuses.find((priority) => priority.value === value) ||
-                          null,
+                        statuses.find((status) => status.value === value) ||
+                          statuses[0], // Default to first status if not found
                       );
                       setOpen(false);
                     }}

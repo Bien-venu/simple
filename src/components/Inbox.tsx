@@ -29,14 +29,13 @@ const Inbox = () => {
                 </div>
                 <div className="flex flex-col text-grey">
                   <div className="flex gap-2 text-sm">
-                    <h1 className="font-medium uppercase">{m.code}</h1>
+                    <h1 className="font-medium uppercase">{m.team}</h1>
                     <h2 className="font-semibold">{m.task}</h2>
                   </div>
-                  <h6 className="text-xs font-medium">{m.activity}</h6>
+                  <h6 className="text-xs font-medium">
+                    {m.assigner} assigned to you
+                  </h6>
                 </div>
-              </div>
-              <div className="text-xs text-grey">
-                <span>4d</span>
               </div>
             </div>
           ))}

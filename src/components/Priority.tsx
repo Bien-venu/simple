@@ -35,11 +35,17 @@ const statuses: Status[] = [
   { value: "low", label: "Low", icon: BiSignal2 },
 ];
 
-export function Priority({ a }: any) {
+export function Priority({ a }: { a: { priority: string } }) {
   const [open, setOpen] = React.useState(false);
   const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
     statuses.find((status) => status.value === a.priority) || null,
   );
+
+  React.useEffect(() => {
+    setSelectedStatus(
+      statuses.find((status) => status.value === a.priority) || null,
+    );
+  }, [a.priority]); // Update when a.priority changes
 
   return (
     <div className="flex items-center">
