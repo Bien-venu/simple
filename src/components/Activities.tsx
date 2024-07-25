@@ -46,8 +46,8 @@ const Activities = ({ message }: any) => {
             <div key={index} className="flex items-center gap-4">
               {IconComponent ? (
                 <IconComponent
-                  size={20}
-                  className={getIconClassName(activity.icon)}
+                 
+                  className={getIconClassName(activity.icon + ' w-4 h-4')}
                 />
               ) : null}
               <div className="flex items-center gap-1 text-xs text-grey">
