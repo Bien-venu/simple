@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { AppProvider } from "../context/AppContext";
-import { ConvexClientProvider } from "./ConvexClientProvider";
 
 export const metadata: Metadata = {
   title: "Simple",
@@ -14,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ConvexClientProvider>
+    <>
       <AppProvider>
         <html lang="en">
           <body>
@@ -24,6 +23,6 @@ export default function RootLayout({
           </body>
         </html>
       </AppProvider>
-    </ConvexClientProvider>
+    </>
   );
 }
