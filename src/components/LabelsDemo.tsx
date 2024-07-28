@@ -101,12 +101,12 @@ export function LabelsDemo() {
                     framework.value === "improvement" && "text-improvement"
                   } ${framework.value === "bug" && "text-bug"} ${
                     framework.value === "feature" && "text-feature"
-                  } mr-2 h-4 w-4 shrink-0`}
+                  } mr-2 ml-2 h-3 w-3 shrink-0`}
                 />
                 {framework.label}
                 <CheckIcon
                   className={cn(
-                    "ml-auto h-4 w-4",
+                    "ml-auto h-3 w-3",
                     value === framework.value ? "opacity-100" : "opacity-0",
                   )}
                 />
