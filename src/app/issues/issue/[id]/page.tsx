@@ -1,4 +1,3 @@
-import React from "react";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { messages } from "@/data/data";
 import Notification from "@/components/Notification";
@@ -7,8 +6,8 @@ import MainHeader from "@/components/MainHeader";
 
 const page = ({ params }: { params: any }) => {
   const id = Number((params as Params).id);
-  console.log(id);
   const selected = messages.find((item) => Number(item.id) === id);
+  
   return (
     <div className="flex h-full w-full flex-col">
       <div className="flex items-center justify-center gap-1 bg-background p-1 py-2 text-sm font-semibold text-white">
@@ -36,8 +35,8 @@ const page = ({ params }: { params: any }) => {
         </svg>
         <h1 className="text-white">Issue</h1>
       </div>
-      <div className="flex flex-col px-4 pb-4 text-sm font-semibold h-full">
-        <div className="flex flex-col border border-border rounded overflow-hidden text-sm font-semibold h-full">
+      <div className="flex h-full flex-col px-4 pb-4 text-sm font-semibold">
+        <div className="flex h-full flex-col overflow-hidden rounded border border-border text-sm font-semibold">
           <div className="flex min-h-10 w-full items-center border-b border-border px-8">
             <div className="flex items-center gap-1">
               <svg

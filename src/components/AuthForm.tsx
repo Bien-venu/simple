@@ -1,7 +1,88 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const AuthForm = ({ data }: any) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter(); // Hook for navigation
+
+  const initializeFormData = () => {
+    if (!data) return {};
+    return data.reduce((acc: any, item: any) => {
+      item.inputs.forEach((input: string) => {
+        acc[input] = "";
+      });
+      return acc;
+    }, {});
+  };
+  const [formData, setFormData] = useState(initializeFormData);
+
+  useEffect(() => {
+    setFormData(initializeFormData());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData: any) => ({
+      ...prevFormData,
+      [name.toLowerCase()]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      setIsLoading(true);
+      for (const item of data) {
+        if (item.message && item.message.name === "signup") {
+          try {
+            await axios.post(
+              `${process.env.NEXT_PUBLIC_BACKEND_SERVER_URL}/signup`,
+              formData,
+            );
+            toast(item.message.message);
+            router.push("/login"); // Navigate to login page after signup
+          } catch (error: any) {
+            if (error.response?.status === 401) {
+              toast.error("This account already exists!");
+            } else if (error.response?.status === 402) {
+              toast.error("Registration failed. Please try again!");
+            } else if (error.response?.status === 403) {
+              toast.error("Username is already taken!");
+            } else {
+              console.error("Error:", error);
+            }
+          }
+        } else if (item.message && item.message.name === "forgot") {
+          await axios.post(
+            `${process.env.NEXT_PUBLIC_BACKEND_SERVER_URL}/profile/forgot-password`,
+            formData,
+          );
+          toast(item.message.message);
+          router.push("/verify"); // Navigate to verify page after password reset
+        } else if (item.message && item.message.name === "login") {
+          await axios.post(
+            `${process.env.NEXT_PUBLIC_BACKEND_SERVER_URL}/login`,
+            formData,
+          );
+          router.push("/issues"); // Navigate to dashboard after login
+          toast(item.message.message);
+        }
+      }
+    } catch (error: any) {
+      setIsLoading(false);
+      console.error("Unexpected Error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       {data.map((item: any, index: number) => (
@@ -14,63 +95,87 @@ const AuthForm = ({ data }: any) => {
               <h1 className="text-black text-2xl font-semibold">
                 {item.title}
               </h1>
-              <p className="flex items-center gap-1">
-                {item.path.message}
-                <Link
-                  href={item.path.path}
-                  className=" text-improvement font-semibold"
-                >
-                  {item.path.name}
-                </Link>
-              </p>
+              {item.path && (
+                <p className="flex items-center gap-1">
+                  {item.path.message}
+                  <Link
+                    href={item.path.path}
+                    className="font-semibold text-improvement"
+                  >
+                    {item.path.name}
+                  </Link>
+                </p>
+              )}
             </div>
-            <form className="flex flex-col gap-8">
+            <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
               <div className="flex flex-col gap-4">
                 {item.inputs.map((input: any, inputIndex: number) => (
                   <div key={inputIndex} className="flex flex-col gap-0">
-                    <label>{input}</label>
+                    <label htmlFor={input} className="">
+                      Enter {input}
+                    </label>
                     {input.toLowerCase() === "password" ? (
                       <input
                         type="password"
-                        placeholder={input.placeholder}
-                        className="text-gray border-b border-border bg-background pt-2 text-sm"
-                        required={input.required}
+                        id={input}
+                        name={input}
+                        className="text-gray border-b border-border bg-background pt-2 text-sm font-medium text-grey"
+                        value={formData[input.toLowerCase()] || ""}
+                        onChange={handleChange}
+                        required
+                      />
+                    ) : input.toLowerCase() === "email address" ? (
+                      <input
+                        type="email"
+                        id={input}
+                        name={input}
+                        className="text-gray border-b border-border bg-background pt-2 text-sm font-medium text-grey"
+                        value={formData[input.toLowerCase()] || ""}
+                        onChange={handleChange}
+                        required
                       />
                     ) : (
                       <input
                         type="text"
-                        placeholder={input.placeholder}
-                        className="text-gray border-b border-border bg-background pt-2 text-sm"
-                        required={input.required}
+                        id={input}
+                        name={input}
+                        className="text-gray border-b border-border bg-background pt-2 text-sm font-medium text-grey"
+                        value={formData[input.toLowerCase()] || ""}
+                        onChange={handleChange}
+                        required
                       />
                     )}
                   </div>
                 ))}
               </div>
-              <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  name="rememberMe"
-                  id="rememberMe"
-                  className="h-3.5 w-3.5"
-                />
-                <label
-                  htmlFor="rememberMe"
-                  className="flex w-full items-center justify-between"
-                >
-                  {item.addition.request}
-                  <span className="text-black font-semibold underline underline-offset-4">
-                    {item.addition.forgot}
-                  </span>
-                </label>
-              </div>
-              <Link
-                href="/issues"
+              {item.addition && (
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    name="rememberMe"
+                    id="rememberMe"
+                    className="h-3.5 w-3.5"
+                  />
+                  <label
+                    htmlFor="rememberMe"
+                    className="flex w-full items-center justify-between"
+                  >
+                    {item.addition.request}
+                    <Link
+                      href="/forgot"
+                      className="text-black font-semibold underline underline-offset-4"
+                    >
+                      {item.addition.forgot}
+                    </Link>
+                  </label>
+                </div>
+              )}
+              <button
                 type="submit"
                 className="bg-black flex w-full items-center justify-center bg-white p-3 font-semibold text-background"
               >
                 {item.button}
-              </Link>
+              </button>
             </form>
           </div>
         </div>

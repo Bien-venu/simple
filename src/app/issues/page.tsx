@@ -1,9 +1,11 @@
-import LeftNavbar from "@/components/LeftNavbar";
+"use client";
 import Main from "@/components/Main";
-import React from "react";
 
-const page = () => {
-  return <Main />;
+import { useAppContext } from "@/context/AppContext";
+
+const Page = () => {
+  const { filter } = useAppContext();
+  return <Main filter={filter} />;
 };
 
-export default page;
+export default Page;

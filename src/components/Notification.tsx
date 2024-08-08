@@ -1,4 +1,3 @@
-import React from "react";
 import Activities from "./Activities";
 import Comment from "./Comment";
 

@@ -1,5 +1,4 @@
 import { useAppContext } from "@/context/AppContext";
-import React from "react";
 
 const capitalizeFirstLetter = (string: string) => {
   if (!string) return string;

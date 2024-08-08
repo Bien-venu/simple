@@ -1,7 +1,6 @@
 "use client";
 import { useAppContext } from "@/context/AppContext";
 import { messages } from "@/data/data";
-import React from "react";
 
 const Inbox = () => {
   const { message, setMessage } = useAppContext();

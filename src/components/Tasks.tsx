@@ -1,4 +1,3 @@
-import React from "react";
 import MainHeader from "./MainHeader";
 import { messages } from "@/data/data";
 import IssuesCard from "./IssuesCard";

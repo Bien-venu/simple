@@ -1,7 +1,6 @@
 "use client";
 import { useAppContext } from "@/context/AppContext";
 import Link from "next/link";
-import React from "react";
 
 const Individual = () => {
   const { filter, setFilter } = useAppContext();

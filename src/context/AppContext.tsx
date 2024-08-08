@@ -1,5 +1,4 @@
 'use client'
-
 import {
   createContext,
   useContext,
@@ -8,7 +7,6 @@ import {
   Dispatch,
   SetStateAction,
 } from "react";
-
 interface AppContextProps {
   data: any[];
   isLoading: boolean;

@@ -1,4 +1,3 @@
-import React from "react";
 import { BiSignal2, BiSignal3, BiSignal4 } from "react-icons/bi";
 import { BsCalendar2X, BsFillExclamationSquareFill } from "react-icons/bs";
 import { RxDotsHorizontal } from "react-icons/rx";
@@ -152,7 +151,7 @@ const IssuesCard = ({ data }: any) => {
   return (
     <Link
       href={`/issues/issue/${data.id}`}
-      onClick={() => setFilter("issue")}
+      // onClick={() => setFilter("issue")}
       className="flex h-fit w-full items-center justify-between border-b border-border p-2 px-8 text-xs font-semibold"
     >
       <div className="flex items-center gap-1">

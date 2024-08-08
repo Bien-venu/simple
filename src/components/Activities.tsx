@@ -1,4 +1,3 @@
-import React from "react";
 import { MdSwapHorizontalCircle } from "react-icons/md";
 import { RiProgress1Line } from "react-icons/ri";
 

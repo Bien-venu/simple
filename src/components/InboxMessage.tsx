@@ -1,6 +1,6 @@
 import { useAppContext } from "@/context/AppContext";
 import { messages } from "@/data/data";
-import React from "react";
+
 import Notification from "./Notification";
 import Properties from "./Properties";
 

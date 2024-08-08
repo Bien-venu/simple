@@ -1,4 +1,3 @@
-import React from "react";
 import MainHeader from "./MainHeader";
 import { messages } from "@/data/data";
 import IssuesCard from "./IssuesCard";
@@ -92,9 +91,7 @@ const getIconClassName = (
 const Backlog = () => {
   const message = messages.filter((message) => message.status === "backlog");
 
-  const status = statuses.filter(
-    (status) => status.value === "backlog"
-  );
+  const status = statuses.filter((status) => status.value === "backlog");
   return (
     <div className="flex flex-1 flex-col pb-2 pr-2">
       <MainHeader />

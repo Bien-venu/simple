@@ -13,7 +13,7 @@ export function Teams() {
   return (
     <Accordion type="single" collapsible className="w-full px-4 text-grey">
       <AccordionItem value="item-1">
-        <AccordionTrigger>My teams</AccordionTrigger>
+        <AccordionTrigger>Projects</AccordionTrigger>
         <AccordionContent>
           <Accordion type="single" collapsible className="w-full px-4">
             <AccordionItem value="item-1">

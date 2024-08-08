@@ -2,23 +2,26 @@ import AuthForm from "@/components/AuthForm";
 import Link from "next/link";
 
 const page = () => {
-  const signForm = [
+  const newForm = [
     {
-      title: "Sign up",
-      inputs: ["Your name", "Username", "Email address", "Password"],
+      title: "Create an account",
+      inputs: ["name", "username", "email", "password"],
+      button: "Save",
       addition: {
-        request: "I agree with Privacy Policy and Terms of use",
+        request: "Agree to the Simple Terms of Service and Privacy Policy.",
       },
       path: {
-        message: "Already have an account?",
+        message: "Already a member?",
         name: "Login",
         path: "/",
       },
-      button: "Sign Up",
+      message: {
+        name: "signup",
+        message: "Account created successfully. You can now log in.",
+      },
     },
   ];
-
-  return <AuthForm data={signForm} />;
+  return <AuthForm data={newForm} />;
 };
 
 export default page;

@@ -1,5 +1,6 @@
 import LeftNavbar from "@/components/LeftNavbar";
 import type { Metadata } from "next";
+import { AppProvider } from "@/context/AppContext";
 
 export const metadata: Metadata = {
   title: "Simple",
@@ -12,9 +13,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="h-screen overflow-hidden flex w-full">
-      <LeftNavbar />
-      {children}
-    </div>
+    <AppProvider>
+      <div className="flex h-screen w-full overflow-hidden">
+        <LeftNavbar />
+        {children}
+      </div>
+    </AppProvider>
   );
 }

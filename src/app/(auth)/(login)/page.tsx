@@ -2,21 +2,25 @@ import AuthForm from "@/components/AuthForm";
 
 const page = () => {
   const signForm = [
-    {
-      title: "Login",
-      inputs: ["Your Username or Email address", "Password"],
-      addition: {
-        request: "Remember me",
-        forgot: "Forgot password?",
-      },
-      path: {
-        message: "Don't have an account yet?",
-        name: "Sign Up",
-        path: "/signup",
-      },
-      button: "Login",
+  {
+    title: "Login",
+    inputs: ["email", "password"],
+    addition: {
+      request: "Remember me",
+      forgot: "Lost Password?",
     },
-  ];
+    path: {
+      message: "Do not have an account?",
+      name: "Signup",
+      path: "/signup",
+    },
+    button: "Login",
+    message: {
+      name: "login",
+      message: "Welcome!",
+    },
+  },
+];
   return <AuthForm data={signForm} />;
 };
 

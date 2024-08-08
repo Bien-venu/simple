@@ -1,4 +1,3 @@
-import React from "react";
 import { Priority } from "./Priority";
 import { Labels } from "./Labels";
 import { BsCalendar2Event } from "react-icons/bs";
@@ -22,7 +21,7 @@ const Properties = ({ a }: any) => {
           <h6>Due Date</h6>
           <div className="text- flex items-center gap-3 text-sm">
             {a.date ? (
-              <BsCalendar2Event size={15} className=" text-improvement" />
+              <BsCalendar2Event size={15} className="text-improvement" />
             ) : (
               <BsCalendar2X size={15} className="text-bug" />
             )}
