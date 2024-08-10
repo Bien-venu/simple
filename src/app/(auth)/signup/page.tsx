@@ -6,7 +6,7 @@ const page = () => {
     {
       title: "Create an account",
       inputs: ["name", "username", "email", "password"],
-      button: "Save",
+      button: "Register",
       addition: {
         request: "Agree to the Simple Terms of Service and Privacy Policy.",
       },

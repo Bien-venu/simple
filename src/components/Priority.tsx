@@ -38,12 +38,14 @@ const statuses: Status[] = [
 export function Priority({ a }: { a: { priority: string } }) {
   const [open, setOpen] = React.useState(false);
   const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
-    statuses.find((status) => status.value === a.priority) || null,
+    statuses.find((status) => status.value === a.priority.toLowerCase()) ||
+      null,
   );
 
   React.useEffect(() => {
     setSelectedStatus(
-      statuses.find((status) => status.value === a.priority) || null,
+      statuses.find((status) => status.value === a.priority.toLowerCase()) ||
+        null,
     );
   }, [a.priority]); // Update when a.priority changes
 

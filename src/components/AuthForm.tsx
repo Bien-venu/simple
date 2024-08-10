@@ -1,13 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
+import { useAppContext } from "@/context/AppContext";
 
 const AuthForm = ({ data }: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter(); // Hook for navigation
+  const { setUser } = useAppContext();
 
   const initializeFormData = () => {
     if (!data) return {};
@@ -22,7 +25,6 @@ const AuthForm = ({ data }: any) => {
 
   useEffect(() => {
     setFormData(initializeFormData());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const handleChange = (
@@ -43,11 +45,11 @@ const AuthForm = ({ data }: any) => {
         if (item.message && item.message.name === "signup") {
           try {
             await axios.post(
-              `${process.env.NEXT_PUBLIC_BACKEND_SERVER_URL}/signup`,
+              `${process.env.NEXT_PUBLIC_BACKEND_SERVER_URL}/auth/register`,
               formData,
             );
             toast(item.message.message);
-            router.push("/login"); // Navigate to login page after signup
+            router.push("/"); // Navigate to login page after signup
           } catch (error: any) {
             if (error.response?.status === 401) {
               toast.error("This account already exists!");
@@ -67,12 +69,35 @@ const AuthForm = ({ data }: any) => {
           toast(item.message.message);
           router.push("/verify"); // Navigate to verify page after password reset
         } else if (item.message && item.message.name === "login") {
-          await axios.post(
-            `${process.env.NEXT_PUBLIC_BACKEND_SERVER_URL}/login`,
-            formData,
-          );
-          router.push("/issues"); // Navigate to dashboard after login
-          toast(item.message.message);
+          try {
+            const response = await axios.post(
+              `${process.env.NEXT_PUBLIC_BACKEND_SERVER_URL}/auth/login`,
+              formData,
+            );
+            setUser({ token: response.data.token, loginTime: new Date() });
+            console.log(response.data);
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("username", response.data.username);
+            localStorage.setItem("email", response.data.email);
+            router.push("/issues"); // Navigate to dashboard after login
+            toast(item.message.message);
+            console.log(response.data);
+          } catch (error: unknown) {
+            if (error instanceof AxiosError) {
+              console.error(
+                "Login failed:",
+                error.response?.data || error.message,
+              );
+              toast(
+                error.response?.data.error || "Login failed. Please try again.",
+              );
+              setIsLoading(false);
+            } else {
+              console.error("Unexpected error:", error);
+              toast("An unexpected error occurred. Please try again.");
+              setIsLoading(false);
+            }
+          }
         }
       }
     } catch (error: any) {

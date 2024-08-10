@@ -16,6 +16,15 @@ function getIconComponent(
   return iconMapping[iconName] || null;
 }
 
+// Function to calculate days ago
+const calculateDaysAgo = (dateString: string) => {
+  const date = new Date(dateString);
+  const today = new Date();
+  const timeDiff = today.getTime() - date.getTime();
+  const daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+  return daysDiff;
+};
+
 const Activities = ({ message }: any) => {
   const getIconClassName = (iconName: string) => {
     switch (iconName) {
@@ -28,35 +37,40 @@ const Activities = ({ message }: any) => {
     }
   };
 
+  const userInitials = message?.user?.slice(0, 2) || "N/A";
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <h1 className="text-base">Activity</h1>
         <div className="flex">
           <div className="mr-[-10px] flex h-6 w-6 items-center justify-center rounded-full border border-bgGray bg-bug text-xs uppercase">
-            {message.worker.slice(0, 2)}
+            {userInitials}
           </div>
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        {message.activities.map((activity: any, index: number) => {
-          const IconComponent = getIconComponent(activity.icon);
-          return (
-            <div key={index} className="flex items-center gap-4">
-              {IconComponent ? (
-                <IconComponent
-                  className={getIconClassName(activity.icon) + " h-4 w-4"}
-                />
-              ) : null}
-              <div className="flex items-center gap-1 text-xs text-grey">
-                <h1 className="text-white">{activity.creator}</h1>
-                <p>{activity.message}</p>
-                <span>.</span>
-                <p>6 days ago</p>
+        {message.comments === undefined ? (
+          <>What is wrong</>
+        ) : (
+          message.comments.map((activity: any, index: number) => {
+            const IconComponent = getIconComponent(activity.icon);
+            const daysAgo = calculateDaysAgo(activity.createdAt);
+            return (
+              <div key={index} className="flex items-center gap-4">
+                <div className="flex h-6 w-6 items-center justify-center rounded-full border border-bgGray bg-bug text-xs uppercase">
+                  {activity.userId.name.slice(0, 2)}
+                </div>
+                <div className="flex items-center gap-2 text-xs text-grey">
+                  <h1 className="text-white">{activity.userId.name}</h1>
+                  <p>{activity.message}</p>
+                  <span>.</span>
+                  <p>{daysAgo} days ago</p>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
     </div>
   );

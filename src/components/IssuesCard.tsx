@@ -1,5 +1,9 @@
 import { BiSignal2, BiSignal3, BiSignal4 } from "react-icons/bi";
-import { BsCalendar2X, BsFillExclamationSquareFill } from "react-icons/bs";
+import {
+  BsCalendar2Event,
+  BsCalendar2X,
+  BsFillExclamationSquareFill,
+} from "react-icons/bs";
 import { RxDotsHorizontal } from "react-icons/rx";
 import {
   ArrowUpCircle,
@@ -143,20 +147,37 @@ const IssuesCard = ({ data }: any) => {
   const { filter, setFilter } = useAppContext();
 
   const priority = priorities.find(
-    (priority) => priority.value === data.priority,
+    (priority) => priority.value === data.priority.toLowerCase(),
   );
 
-  const status = statuses.find((status) => status.value === data.status);
-  const label = labels.find((label) => label.value === data.labels);
+  const status = statuses.find(
+    (status) => status.value === data.status.toLowerCase(),
+  );
+  const label = labels.find(
+    (label) => label.value === data.labels.toLowerCase(),
+  );
+  const userInitials = data?.user?.slice(0, 2) || "N/A";
+
+  // Helper function to parse the date string into a Date object
+  const parseDate = (dateString: string) => {
+    // Parse the date using the date-fns library or JavaScript Date object
+    return new Date(dateString);
+  };
+
+  // Get the current date
+  const currentDate = new Date();
+
+  // Check if a.date is defined and is a future date
+  const isFutureDate = data.date ? parseDate(data.date) > currentDate : false;
+
   return (
     <Link
-      href={`/issues/issue/${data.id}`}
-      // onClick={() => setFilter("issue")}
+      href={`/issues/issue/${data._id}`}
       className="flex h-fit w-full items-center justify-between border-b border-border p-2 px-8 text-xs font-semibold"
     >
       <div className="flex items-center gap-1">
         {priority && <priority.icon className="h-4 w-4 text-grey" />}
-        <h2 className="h-full text-grey">{data.team}</h2>
+        <h2 className="h-full text-grey">{data.project}</h2>
         {status && (
           <status.icon className={getIconClassName(status.icon) + ` h-4 w-4`} />
         )}
@@ -176,11 +197,15 @@ const IssuesCard = ({ data }: any) => {
           {data.labels}
         </div>
         <div className="flex items-center justify-center gap-2 rounded-xl border border-border px-2">
-          <BsCalendar2X size={15} className="text-bug" />
+          {isFutureDate ? (
+            <BsCalendar2Event size={15} className="text-improvement" />
+          ) : (
+            <BsCalendar2X size={15} className="text-bug" />
+          )}
           {data.date}
         </div>
-        <div className="mr-[-10px] flex h-6 w-6 items-center justify-center rounded-full bg-bug uppercase text-white">
-          {data.assigner.slice(0, 2)}
+        <div className="mr-[-10px] flex h-6 w-6 items-center justify-center rounded-full border border-bgGray bg-bug text-xs text-white uppercase">
+          {userInitials}
         </div>
       </div>
     </Link>

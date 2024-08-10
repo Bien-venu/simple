@@ -1,12 +1,48 @@
 import { useAppContext } from "@/context/AppContext";
-import { messages } from "@/data/data";
-
 import Notification from "./Notification";
 import Properties from "./Properties";
+import { Key, useEffect, useState } from "react";
 
 const InboxMessage = () => {
   const { message } = useAppContext();
-  const data = messages.filter((item) => item.id === message);
+  const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_SERVER_URL}/posts/${message}`,
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setPosts(data);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError("An unknown error occurred");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, [message]);
+
+  if (loading) {
+    return (
+      <div className="flex flex-1 flex-col items-center justify-center gap-1 text-grey">
+        Loading
+      </div>
+    );
+  }
 
   if (message === null) {
     return (
@@ -83,12 +119,10 @@ const InboxMessage = () => {
           <h1 className="text-white">Icon v1</h1>
         </div>
       </div>
-      {data.map((a, index) => (
-        <div key={index} className="flex h-full">
-          <Notification a={a} />
-          <Properties a={a} />
-        </div>
-      ))}
+      <div className="flex h-full">
+        <Notification a={posts} />
+        <Properties a={posts} />
+      </div>
     </div>
   );
 };

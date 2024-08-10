@@ -1,13 +1,46 @@
+"use client";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
-import { messages } from "@/data/data";
 import Notification from "@/components/Notification";
 import Properties from "@/components/Properties";
 import MainHeader from "@/components/MainHeader";
+import { useAppContext } from "@/context/AppContext";
+import { useEffect, useState } from "react";
 
-const page = ({ params }: { params: any }) => {
-  const id = Number((params as Params).id);
-  const selected = messages.find((item) => Number(item.id) === id);
-  
+const Page = ({ params }: { params: any }) => {
+  const id = (params as Params).id;
+  // const selected = messages.find((item) => Number(item.id) === id);
+
+  const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_SERVER_URL}/posts/${id}`,
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setPosts(data);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError("An unknown error occurred");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, [id]);
+
   return (
     <div className="flex h-full w-full flex-col">
       <div className="flex items-center justify-center gap-1 bg-background p-1 py-2 text-sm font-semibold text-white">
@@ -79,8 +112,16 @@ const page = ({ params }: { params: any }) => {
             </div>
           </div>
           <div className="flex h-full">
-            <Notification a={selected} />
-            <Properties a={selected} />
+            {loading ? (
+              <div className="flex flex-1 flex-col items-center justify-center gap-1 text-grey">
+                Loading
+              </div>
+            ) : (
+              <>
+                <Notification a={posts} />
+                <Properties a={posts} />
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -88,4 +129,4 @@ const page = ({ params }: { params: any }) => {
   );
 };
 
-export default page;
+export default Page;

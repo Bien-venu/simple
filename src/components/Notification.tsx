@@ -16,7 +16,7 @@ const Notification = ({ a }: any) => {
           <h2>{a.message} </h2>
         </div>
         <Activities message={a} />
-        <Comment />
+        <Comment name={a.task} />
       </div>
     </div>
   );

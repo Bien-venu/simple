@@ -47,12 +47,13 @@ const statuses: Status[] = [
 export function Labels({ a }: { a: { labels: string } }) {
   const [open, setOpen] = React.useState(false);
   const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
-    statuses.find((status) => status.value === a.labels) || null,
+    statuses.find((status) => status.value === a.labels.toLowerCase()) || null,
   );
 
   React.useEffect(() => {
     setSelectedStatus(
-      statuses.find((status) => status.value === a.labels) || null,
+      statuses.find((status) => status.value === a.labels.toLowerCase()) ||
+        null,
     );
   }, [a.labels]); // Update when a.labels changes
 

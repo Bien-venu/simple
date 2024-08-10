@@ -58,7 +58,7 @@ export function Alert() {
                   />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <label htmlFor="Task">Email</label>
+                  <label htmlFor="Task">Assign to</label>
                   <input
                     id="Task"
                     type="email"
@@ -67,11 +67,11 @@ export function Alert() {
                   />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <label htmlFor="Team">Team</label>
+                  <label htmlFor="Project">Project</label>
                   <input
-                    id="Team"
+                    id="Project"
                     type="text"
-                    placeholder="Enter the team"
+                    placeholder="Enter the project name"
                     className="rounded border border-border bg-background p-3"
                   />
                 </div>
