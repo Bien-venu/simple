@@ -29,7 +29,7 @@ const Main = ({ filter }: any) => {
     return <Tasks />;
   }
 
-  return <div className="flex-1 bg-bgGray">{filter}</div>;
+  return <div className="flex-1 bg-bgGray h-full">{filter}</div>;
 };
 
 export default Main;

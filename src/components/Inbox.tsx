@@ -1,9 +1,10 @@
+import Cookies from "js-cookie";
 import { useAppContext } from "@/context/AppContext";
 
 const Inbox = () => {
   const { message, setMessage, data } = useAppContext();
-  const username = localStorage.getItem("username");
-  const email = localStorage.getItem("email");
+  const username = Cookies.get("username"); // Use Cookies to get the value
+  const email = Cookies.get("email"); // Use Cookies to get the value
 
   // Filter data to include only messages where email matches m.user
   const filteredData = data.filter((m) => m.user === email);

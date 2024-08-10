@@ -1,11 +1,11 @@
 import MainHeader from "./MainHeader";
 import IssuesCard from "./IssuesCard";
 import { useAppContext } from "@/context/AppContext";
+import Cookies from "js-cookie";
 
 const Issues = () => {
    const { message, setMessage, data } = useAppContext();
-   const email = localStorage.getItem("email");
-
+ const email = Cookies.get("email");
    // Filter data to include only messages where email matches m.user
    const filteredData = data.filter((m) => m.user === email);
 

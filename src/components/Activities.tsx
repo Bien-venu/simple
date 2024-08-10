@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { MdSwapHorizontalCircle } from "react-icons/md";
 import { RiProgress1Line } from "react-icons/ri";
 
@@ -57,16 +58,23 @@ const Activities = ({ message }: any) => {
             const IconComponent = getIconComponent(activity.icon);
             const daysAgo = calculateDaysAgo(activity.createdAt);
             return (
-              <div key={index} className="flex items-center gap-4">
-                <div className="flex h-6 w-6 items-center justify-center rounded-full border border-bgGray bg-bug text-xs uppercase">
-                  {activity.userId.name.slice(0, 2)}
+              <div key={index} className="flex flex-col items-start gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full border border-bgGray bg-bug text-xs uppercase">
+                    {activity.userId.name.slice(0, 2)}
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-grey">
+                    <h1 className="text-white">{activity.userId.name}</h1>
+                    <p>{activity.message}</p>
+                    <span>.</span>
+                    <p>{daysAgo} days ago</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-grey">
-                  <h1 className="text-white">{activity.userId.name}</h1>
-                  <p>{activity.message}</p>
-                  <span>.</span>
-                  <p>{daysAgo} days ago</p>
-                </div>
+                {activity.image && (
+                  <div className="flex w-64 h-64">
+                    <img src={activity.image} alt="" className=" h-full w-full object-cover" />
+                  </div>
+                )}
               </div>
             );
           })

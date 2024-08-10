@@ -3,7 +3,7 @@ import Comment from "./Comment";
 
 const Notification = ({ a }: any) => {
   return (
-    <div className="h-full flex-1 p-8">
+    <div className="h-full overflow-auto flex-1 p-8">
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-4">
           <h1 className="text-2xl font-semibold">{a.task}</h1>

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -6,6 +5,7 @@ import { toast } from "sonner";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/context/AppContext";
+import Cookies from 'js-cookie';
 
 const AuthForm = ({ data }: any) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -76,12 +76,11 @@ const AuthForm = ({ data }: any) => {
             );
             setUser({ token: response.data.token, loginTime: new Date() });
             console.log(response.data);
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("username", response.data.username);
-            localStorage.setItem("email", response.data.email);
-            router.push("/issues"); // Navigate to dashboard after login
+            Cookies.set('token', response.data.token, { expires: 7 }); // Expires in 7 days
+            Cookies.set('username', response.data.username, { expires: 7 });
+            Cookies.set('email', response.data.email, { expires: 7 });
             toast(item.message.message);
-            console.log(response.data);
+            router.push("/issues"); // Navigate to dashboard after login
           } catch (error: unknown) {
             if (error instanceof AxiosError) {
               console.error(

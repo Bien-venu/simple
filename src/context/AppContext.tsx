@@ -8,6 +8,7 @@ import {
   SetStateAction,
   useEffect,
 } from "react";
+import Cookies from "js-cookie";
 
 interface AppContextProps {
   data: any[];
@@ -35,7 +36,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedStatus, setSelectedStatus] = useState("To Do");
-  const username = localStorage.getItem("username");
+  const username = Cookies.get("username");
   const initialFilter = username?.toLowerCase() === "admin" ? "tasks" : "inbox";
   const [filter, setFilter] = useState(initialFilter);
   const [message, setMessage] = useState<number | null>(null);

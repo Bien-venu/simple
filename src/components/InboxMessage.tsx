@@ -119,7 +119,7 @@ const InboxMessage = () => {
           <h1 className="text-white">Icon v1</h1>
         </div>
       </div>
-      <div className="flex h-full">
+      <div className="flex h-full overflow-hidden">
         <Notification a={posts} />
         <Properties a={posts} />
       </div>
