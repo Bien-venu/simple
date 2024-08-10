@@ -1,21 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
 import { MdOutlineAttachment } from "react-icons/md";
 import { BsArrowUpShort } from "react-icons/bs";
 import { useState, useRef } from "react";
 import Spinner from "./Spinner";
+import Cookies from "js-cookie";
+import axios, { AxiosError } from "axios";
+import { useAppContext } from "@/context/AppContext";
 
-const Comment = ({ name }: any) => {
+const Comment = ({ comment, postId }: { comment: any; postId: string }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [images, setImages] = useState<string[]>([]);
+  const [message, setMessage] = useState("");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const token = Cookies.get("token");
+  const { setChange } = useAppContext(); // Ensure this is imported correctly
 
   const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
       setIsUploading(true);
       const uploadedImages: string[] = [];
-      const fileArray = Array.from(files); // Convert FileList to Array
+      const fileArray = Array.from(files);
 
       for (const file of fileArray) {
         const formData = new FormData();
@@ -30,8 +35,12 @@ const Comment = ({ name }: any) => {
               body: formData,
             },
           );
-          const data = await response.json();
-          uploadedImages.push(data.secure_url);
+          if (response.ok) {
+            const data = await response.json();
+            uploadedImages.push(data.secure_url);
+          } else {
+            console.error("Failed to upload image:", await response.text());
+          }
         } catch (error) {
           console.error("Error uploading image:", error);
         }
@@ -52,11 +61,52 @@ const Comment = ({ name }: any) => {
     setImages((prevImages) => prevImages.filter((image) => image !== url));
   };
 
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER_URL}/comments`,
+        {
+          message,
+          postId,
+          image: images[0] || "", // Only sending the first image if there are multiple
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (response.status === 201) {
+        // Trigger context update after successful comment creation
+        setChange(true);
+      } else {
+        console.error("Failed to create comment:", response.data);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        // Handle Axios errors
+        console.error(
+          "Error creating comment:",
+          error.response?.data || error.message,
+        );
+      } else if (error instanceof Error) {
+        // Handle general errors
+        console.error("Error creating comment:", error.message);
+      } else {
+        // Handle unknown errors
+        console.error("Unexpected error:", error);
+      }
+    }
+  };
+
   return (
     <div className="relative rounded border border-border bg-account p-4">
       <textarea
         className="w-full bg-account pb-32"
-        placeholder={`Leave a comment for ${name}`} // Unique comment placeholder
+        placeholder={`Leave a comment for ${comment.name}`}
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
       />
       <div className="mb-2 flex flex-wrap items-center gap-1">
         {images.map((image) => (
@@ -95,7 +145,10 @@ const Comment = ({ name }: any) => {
           onClick={handleAttachmentClick}
           className="cursor-pointer"
         />
-        <div className="flex items-center justify-center rounded-full bg-btn">
+        <div
+          className="flex cursor-pointer items-center justify-center rounded-full bg-btn"
+          onClick={handleSubmit}
+        >
           <BsArrowUpShort size={24} className="text-white" />
         </div>
       </div>

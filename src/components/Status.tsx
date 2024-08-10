@@ -9,7 +9,6 @@ import {
 } from "react-icons/ri";
 import { IoIosCloseCircle } from "react-icons/io";
 import Cookies from "js-cookie";
-
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,7 +24,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import axios from "axios"; // Import axios for making HTTP requests
+import axios from "axios";
+import { useAppContext } from "@/context/AppContext";
 
 type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
@@ -66,7 +66,6 @@ const Status = ({
     const newStatus =
       statuses.find((status) => status.value === a.status.toLowerCase()) ||
       statuses[0];
-    console.log("Updated selected status:", newStatus); // Log the new selected status
     setSelectedStatus(newStatus);
   }, [a.status]);
 
@@ -89,12 +88,9 @@ const Status = ({
 
   const email = Cookies.get("email");
   const token = Cookies.get("token");
-
-  console.log("Email:", email); // Log the email
-  console.log("Token:", token); // Log the token
+  const { setChange } = useAppContext(); // Ensure this is imported correctly
 
   const updateStatus = async (statusValue: string) => {
-    console.log("Updating status to:", statusValue); // Log the status value
     try {
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_BACKEND_SERVER_URL}/posts/${a._id}`,
@@ -109,6 +105,7 @@ const Status = ({
       setSelectedStatus(
         statuses.find((status) => status.value === statusValue) || statuses[0],
       );
+      setChange(true); // Set change to trigger data refetch
     } catch (error) {
       console.error("Error updating status:", error);
     }

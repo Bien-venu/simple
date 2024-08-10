@@ -114,7 +114,7 @@ const Page = ({ params }: { params: any }) => {
           <div className="flex h-full">
             {loading ? (
               <div className="flex flex-1 flex-col items-center justify-center gap-1 text-grey">
-                Loading
+                Loading...
               </div>
             ) : (
               <>

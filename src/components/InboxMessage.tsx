@@ -4,7 +4,7 @@ import Properties from "./Properties";
 import { Key, useEffect, useState } from "react";
 
 const InboxMessage = () => {
-  const { message } = useAppContext();
+  const { message, change, setChange } = useAppContext();
   const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -22,6 +22,7 @@ const InboxMessage = () => {
         }
         const data = await response.json();
         setPosts(data);
+       setChange(false);
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message);
@@ -34,12 +35,12 @@ const InboxMessage = () => {
     };
 
     fetchPosts();
-  }, [message]);
+  }, [message, change]);
 
   if (loading) {
     return (
       <div className="flex flex-1 flex-col items-center justify-center gap-1 text-grey">
-        Loading
+        Loading...
       </div>
     );
   }

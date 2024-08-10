@@ -3,7 +3,7 @@ import Comment from "./Comment";
 
 const Notification = ({ a }: any) => {
   return (
-    <div className="h-full overflow-auto flex-1 p-8">
+    <div className="h-full flex-1 overflow-auto p-8">
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-4">
           <h1 className="text-2xl font-semibold">{a.task}</h1>
@@ -16,7 +16,7 @@ const Notification = ({ a }: any) => {
           <h2>{a.message} </h2>
         </div>
         <Activities message={a} />
-        <Comment name={a.task} />
+        <Comment comment={a} postId={a._id} />
       </div>
     </div>
   );

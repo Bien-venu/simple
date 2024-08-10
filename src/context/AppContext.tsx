@@ -12,7 +12,10 @@ import Cookies from "js-cookie";
 
 interface AppContextProps {
   data: any[];
-  isLoading: boolean;
+  change: boolean;
+  setChange: Dispatch<SetStateAction<boolean>>; // This should be a function
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
   error: string | null;
   selectedStatus: string;
   setSelectedStatus: Dispatch<SetStateAction<string>>;
@@ -33,17 +36,18 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<{ token: string; loginTime: Date } | null>(
     null,
   );
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedStatus, setSelectedStatus] = useState("To Do");
   const username = Cookies.get("username");
   const initialFilter = username?.toLowerCase() === "admin" ? "tasks" : "inbox";
   const [filter, setFilter] = useState(initialFilter);
   const [message, setMessage] = useState<number | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [change, setChange] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
+      setLoading(true);
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_SERVER_URL}/posts`,
@@ -58,6 +62,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
           error instanceof Error ? error.message : "An unknown error occurred",
         );
       } finally {
+        setChange(false);
         setLoading(false);
       }
     };
@@ -69,7 +74,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     <AppContext.Provider
       value={{
         data,
-        isLoading,
+        change,
+        setChange,
         error,
         filter,
         setFilter,
@@ -79,6 +85,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         setSelectedStatus,
         user,
         setUser,
+        loading,
+        setLoading,
       }}
     >
       {children}
