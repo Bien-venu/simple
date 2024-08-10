@@ -8,6 +8,7 @@ import {
   RiProgress4Line,
 } from "react-icons/ri";
 import { IoIosCloseCircle } from "react-icons/io";
+import Cookies from "js-cookie";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -46,7 +47,15 @@ const statuses: Status[] = [
   { value: "canceled", label: "Canceled", icon: IoIosCloseCircle },
 ];
 
-const Status = ({ a }: { a: { status: string; id: string } }) => {
+const Status = ({
+  a,
+}: {
+  a: {
+    [x: string]: any;
+    status: string;
+    _id: string;
+  };
+}) => {
   const [open, setOpen] = React.useState(false);
   const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
     statuses.find((status) => status.value === a.status.toLowerCase()) ||
@@ -54,10 +63,11 @@ const Status = ({ a }: { a: { status: string; id: string } }) => {
   );
 
   React.useEffect(() => {
-    setSelectedStatus(
+    const newStatus =
       statuses.find((status) => status.value === a.status.toLowerCase()) ||
-        statuses[0], // Default to first status if not found
-    );
+      statuses[0];
+    console.log("Updated selected status:", newStatus); // Log the new selected status
+    setSelectedStatus(newStatus);
   }, [a.status]);
 
   const getIconClassName = (icon: IconType) => {
@@ -77,9 +87,25 @@ const Status = ({ a }: { a: { status: string; id: string } }) => {
     }
   };
 
+  const email = Cookies.get("email");
+  const token = Cookies.get("token");
+
+  console.log("Email:", email); // Log the email
+  console.log("Token:", token); // Log the token
+
   const updateStatus = async (statusValue: string) => {
+    console.log("Updating status to:", statusValue); // Log the status value
     try {
-      await axios.patch(`/api/posts/${a.id}/status`, { status: statusValue });
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVER_URL}/posts/${a._id}`,
+        { status: statusValue, user: email },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      console.log("Status update response:", response.data); // Log the response from the API
       setSelectedStatus(
         statuses.find((status) => status.value === statusValue) || statuses[0],
       );
