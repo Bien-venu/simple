@@ -22,7 +22,7 @@ const Inbox = () => {
         <div className="flex flex-col gap-4">
           {filteredData.map((m, index) => (
             <div
-              className={` ${message === m.id && "bg-hover"} mx-2 flex items-center justify-between rounded p-2 hover:bg-hover`}
+              className={` ${message === m._id && "bg-hover"} mx-2 flex items-center justify-between rounded p-2 hover:bg-hover`}
               key={index}
               onClick={() => setMessage(m._id)}
             >

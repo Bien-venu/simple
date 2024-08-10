@@ -1,5 +1,3 @@
-'use client'
-
 import * as React from "react";
 import { ArrowUpCircle, CheckCircle2, Circle, HelpCircle } from "lucide-react";
 import {
@@ -26,6 +24,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import axios from "axios"; // Import axios for making HTTP requests
 
 type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
@@ -36,57 +35,22 @@ type Status = {
 };
 
 const statuses: Status[] = [
-  {
-    value: "backlog",
-    label: "Backlog",
-    icon: HelpCircle,
-  },
-  {
-    value: "todo",
-    label: "Todo",
-    icon: Circle,
-  },
-  {
-    value: "in progress",
-    label: "In Progress",
-    icon: RiProgress1Line,
-  },
-  {
-    value: "halfly done",
-    label: "Halfly Done",
-    icon: RiProgress4Line,
-  },
-  {
-    value: "conflict",
-    label: "Conflict",
-    icon: RiProgress6Line,
-  },
-  {
-    value: "complete",
-    label: "Completed",
-    icon: RiProgress7Line,
-  },
-  {
-    value: "review",
-    label: "In Review",
-    icon: RiProgress7Line,
-  },
-  {
-    value: "done",
-    label: "Done",
-    icon: RiProgress8Line,
-  },
-  {
-    value: "canceled",
-    label: "Canceled",
-    icon: IoIosCloseCircle,
-  },
+  { value: "backlog", label: "Backlog", icon: HelpCircle },
+  { value: "todo", label: "Todo", icon: Circle },
+  { value: "in progress", label: "In Progress", icon: RiProgress1Line },
+  { value: "halfly done", label: "Halfly Done", icon: RiProgress4Line },
+  { value: "conflict", label: "Conflict", icon: RiProgress6Line },
+  { value: "complete", label: "Completed", icon: RiProgress7Line },
+  { value: "review", label: "In Review", icon: RiProgress7Line },
+  { value: "done", label: "Done", icon: RiProgress8Line },
+  { value: "canceled", label: "Canceled", icon: IoIosCloseCircle },
 ];
 
-const Status = ({ a }: { a: { status: string } }) => {
+const Status = ({ a }: { a: { status: string; id: string } }) => {
   const [open, setOpen] = React.useState(false);
   const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
-    statuses.find((status) => status.value === a.status.toLowerCase()) || statuses[0], // Default to first status if not found
+    statuses.find((status) => status.value === a.status.toLowerCase()) ||
+      statuses[0], // Default to first status if not found
   );
 
   React.useEffect(() => {
@@ -94,7 +58,7 @@ const Status = ({ a }: { a: { status: string } }) => {
       statuses.find((status) => status.value === a.status.toLowerCase()) ||
         statuses[0], // Default to first status if not found
     );
-  }, [a.status]); // Update when a.status changes
+  }, [a.status]);
 
   const getIconClassName = (icon: IconType) => {
     switch (icon) {
@@ -110,6 +74,17 @@ const Status = ({ a }: { a: { status: string } }) => {
         return "text-improvement";
       default:
         return "";
+    }
+  };
+
+  const updateStatus = async (statusValue: string) => {
+    try {
+      await axios.patch(`/api/posts/${a.id}/status`, { status: statusValue });
+      setSelectedStatus(
+        statuses.find((status) => status.value === statusValue) || statuses[0],
+      );
+    } catch (error) {
+      console.error("Error updating status:", error);
     }
   };
 
@@ -148,10 +123,7 @@ const Status = ({ a }: { a: { status: string } }) => {
                     value={status.value}
                     className="hover:bg-hover"
                     onSelect={(value) => {
-                      setSelectedStatus(
-                        statuses.find((status) => status.value === value) ||
-                          statuses[0], // Default to first status if not found
-                      );
+                      updateStatus(value);
                       setOpen(false);
                     }}
                   >
