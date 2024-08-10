@@ -75,7 +75,6 @@ const AuthForm = ({ data }: any) => {
               formData,
             );
             setUser({ token: response.data.token, loginTime: new Date() });
-            console.log(response.data);
             Cookies.set('token', response.data.token, { expires: 7 }); // Expires in 7 days
             Cookies.set('username', response.data.username, { expires: 7 });
             Cookies.set('email', response.data.email, { expires: 7 });
